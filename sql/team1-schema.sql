@@ -173,3 +173,71 @@ CREATE TABLE IF NOT EXISTS reserves (
 		ON DELETE CASCADE
 		ON UPDATE CASCADE
 );
+
+-- # CREATE SQL SCHEMA FOR FLIGHTS
+DROP TABLE IF EXISTS flights;
+CREATE TABLE IF NOT EXISTS flights (
+
+	flight_id INTEGER PRIMARY KEY AUTO_INCREMENT,
+	flight_number VARCHAR(10) NOT NULL,
+	airline_name VARCHAR(50) NOT NULL,
+	departure_date VARCHAR(50) ,
+	departure_time VARCHAR(50) ,
+	departure_airport VARCHAR(50) NOT NULL,
+	arrival_airport VARCHAR(50) NOT NULL,
+	duration INTEGER NOT NULL,
+	price DOUBLE PRECISION NOT NULL
+);
+
+-- create sql schema for hotels
+DROP TABLE IF EXISTS hotels;
+CREATE TABLE IF NOT EXISTS hotels (
+
+	hotel_id INTEGER PRIMARY KEY AUTO_INCREMENT,
+	hotel_number VARCHAR(50) NOT NULL,
+	hotel_name VARCHAR(50) NOT NULL,
+	hotel_address VARCHAR(50) NOT NULL,
+	city VARCHAR(50) NOT NULL,
+	country VARCHAR(50) NOT NULL,
+	hotel_rating INTEGER NOT NULL,
+	price DOUBLE PRECISION NOT NULL
+);
+
+
+DROP TABLE IF EXISTS activities;
+CREATE TABLE IF NOT EXISTS activities (
+	activity_id INTEGER PRIMARY KEY AUTO_INCREMENT,
+	activity_name VARCHAR(50) NOT NULL,
+	description VARCHAR(250) NOT NULL,
+	address VARCHAR(50) NOT NULL,
+	price DOUBLE PRECISION NOT NULL
+);
+
+-- create table with name , number as string, price
+DROP TABLE IF EXISTS trip_common;
+CREATE TABLE IF NOT EXISTS trip_common (
+	trip_id INTEGER PRIMARY KEY AUTO_INCREMENT,
+	trip_trip_id INTEGER,
+	name VARCHAR(50) NOT NULL,
+	number VARCHAR(50) ,
+	price DOUBLE PRECISION NOT NULL,
+	username VARCHAR(30) NOT NULL,
+	is_booked BOOLEAN NOT NULL,
+
+	FOREIGN KEY (trip_trip_id) REFERENCES trip(trip_id)
+		ON DELETE CASCADE,
+);
+
+DROP TABLE IF EXISTS package_booking;
+CREATE TABLE IF NOT EXISTS package_booking (
+	package_booking_id INTEGER PRIMARY KEY AUTO_INCREMENT,
+	trip_id INTEGER,
+	customer_username VARCHAR(30),
+	
+	FOREIGN KEY (trip_id) REFERENCES trip(trip_id)
+		ON DELETE CASCADE,
+	FOREIGN KEY (customer_username) REFERENCES user(username)
+		ON DELETE CASCADE
+);
+
+
